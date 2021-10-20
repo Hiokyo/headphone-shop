@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}product Detail{% endblock %}
+
+{% block body %}
+<div class="container">
+   <h4 class="text-primary text-center">Product Detail</h4>
+   <a class="btn btn-outline-primary" href="{{ path('product_add') }}">ADD PRODUCT</a>
+   <table class="table table-striped text-center">
+      <thead>
+         <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Brand</th>
+            <th>Description</th>
+            <th>Actions</th>
+         </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+               <a href="{{ path('product_detail', {'id' : product.id }) }}">
+                  <img src="{{ asset('images/product/'~product.image) }}" width="150" height="150" alt="image">
+               </a>
+				</td>
+
+            <td></td>
+            <td>{{ product.description }}</td>
+            <td>
+               <a class="btn btn-primary" href="{{ path('product_edit', {'id': product.id }) }}">EDIT</a>
+               <a class="btn btn-warning" href="{{ path('product_delete', {'id': product.id }) }}"
+               onclick="return confirm('Are you sure to delete this product ?')">
+               DELETE</a>
+            </td>
+         </tr>    
+      </tbody>
+   </table>
+</div>
+{% endblock %}

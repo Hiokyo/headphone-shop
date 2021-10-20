@@ -39,7 +39,6 @@ class Product
 
     /**
      * @ORM\ManyToOne(targetEntity=Brand::class, inversedBy="products")
-     * @ORM\JoinColumn(nullable=false)
      */
     private $brand;
 

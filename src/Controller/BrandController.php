@@ -40,7 +40,17 @@ class BrandController extends AbstractController
 
     #[Route('/brand/delete/{id}', name: 'brand_delete')]
     public function brandDelete($id) {
+        $brand = $this->getDoctrine()->getRepository(Brand::class)->find($id);
+        if ($brand == null) {
+            $this->addFlash('Error', 'Brand is not existed');
+        } else {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->remove($brand);
 
+            $manager->flush();
+            $this->addFlash('Success', 'Brand has been deleted successfully !');
+        }
+        return $this->redirectToRoute('brand_index');
     }
 
     #[Route('/brand/add', name: 'brand_add')]

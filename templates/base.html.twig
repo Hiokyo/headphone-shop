@@ -16,6 +16,15 @@
         {% endblock %}
     </head>
     <body>
+        <div class="container col-md-6 mt-3">
+			{% for message in app.flashes('Error') %}
+				<p class="alert alert-danger">{{ message }}</p>
+			{% endfor %}
+			{% for message in app.flashes('Success') %}
+				<p class="alert alert-primary">{{ message }}</p>
+			{% endfor %}
+		</div>
+
         {% block body %}{% endblock %}
     </body>
 </html>
