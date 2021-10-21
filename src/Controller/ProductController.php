@@ -5,15 +5,15 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Form\AddToCartType;
-use App\Manager\CartManager;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use function PHPUnit\Framework\throwException;
-
 use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use App\Manager\CartManager;
 
 class ProductController extends AbstractController
 {   
@@ -34,6 +34,7 @@ class ProductController extends AbstractController
 
             $cartManager->save($cart);
 
+            $this->addFlash('Success', "Add To Cart successfully !");
             return $this->redirectToRoute('product.detail', ['id' => $product->getId()]);
         }
         return $this->render('product/home-detail.html.twig', [

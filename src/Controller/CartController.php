@@ -12,10 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class CartController extends AbstractController
 {
     /**
-     * Class CartController
-     * @package App\Controller
+     * @Route("/cart", name="cart")
      */
-    #[Route('/cart', name: 'cart')]
     public function index(CartManager $cartManager, Request $request): Response
     {
         $cart = $cartManager->getCurrentCart();

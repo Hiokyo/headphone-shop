@@ -14,7 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class CartType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add('items', CollectionType::class, [
@@ -22,12 +22,12 @@ class CartType extends AbstractType
             ])
             ->add('save', SubmitType::class)
             ->add('clear', SubmitType::class);
-        
-        // $builder->addEventSubscriber(new RemoveCartItemListener());
-        // $builder->addEventSubscriber(new ClearCartListener());
+
+        $builder->addEventSubscriber(new RemoveCartItemListener());
+        $builder->addEventSubscriber(new ClearCartListener());
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Order::class,
