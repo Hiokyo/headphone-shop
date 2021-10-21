@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}product Detail{% endblock %}
+{% block title %}Product Detail{% endblock %}
 
 {% block body %}
 <div class="container">
-   <h4 class="text-primary text-center">Product Detail</h4>
-   <a class="btn btn-outline-primary" href="{{ path('product_add') }}">ADD PRODUCT</a>
+   <h3 class="text-primary text-center">Product Detail</h3>
+   <a class="btn btn-outline-primary" href="{{ path('product_index') }}">BACK TO PRODUCT LIST</a>
    <table class="table table-striped text-center">
       <thead>
          <tr>
@@ -24,9 +24,7 @@
             <td>{{ product.name }}</td>
             <td>{{ product.price }}</td>
             <td>
-               <a href="{{ path('product_detail', {'id' : product.id }) }}">
-                  <img src="{{ asset('images/product/'~product.image) }}" width="150" height="150" alt="image">
-               </a>
+                  <img src="{{ asset('/image/product/')~product.image }}" width="150" height="150" alt="image">
 				</td>
 
             <td></td>

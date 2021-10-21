@@ -3,10 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Brand;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use App\Form\BrandType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BrandController extends AbstractController
 {
@@ -55,11 +56,47 @@ class BrandController extends AbstractController
 
     #[Route('/brand/add', name: 'brand_add')]
     public function brandAdd(Request $request){
+        $brand = new Brand();
+        $form = $this->createForm(BrandType::class,$brand);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($brand);
+            $manager->flush();
+
+            $this->addFlash("Success", "Add new brand successfully !");
+            return $this->redirectToRoute('brand_index');
+        }
+
+        return $this->render(
+            "brand/add.html.twig", 
+            [
+                "form" => $form->createView()
+            ]
+        );
     }
 
     #[Route('/brand/edit/{id}', name: 'brand_edit')]
     public function brandEdit(Request $request, $id){
+        $brand = $this->getDoctrine()->getRepository(Brand::class)->find($id);
+        $form = $this->createForm(BrandType::class,$brand);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($brand);
+            $manager->flush();
+
+            $this->addFlash("Success", "Edit brand successfully !");
+            return $this->redirectToRoute('brand_index');
+        }
+
+        return $this->render(
+            "brand/edit.html.twig", 
+            [
+                "form" => $form->createView()
+            ]
+        );
     }
 }
