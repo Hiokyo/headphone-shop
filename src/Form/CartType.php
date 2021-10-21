@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Order;
+use App\Entity\Product;
 use App\Form\CartItemType;
 use Symfony\Component\Form\AbstractType;
 use App\Form\EventListener\ClearCartListener;
@@ -14,7 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class CartType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('items', CollectionType::class, [
@@ -23,11 +24,11 @@ class CartType extends AbstractType
             ->add('save', SubmitType::class)
             ->add('clear', SubmitType::class);
 
-        $builder->addEventSubscriber(new RemoveCartItemListener());
-        $builder->addEventSubscriber(new ClearCartListener());
+            $builder->addEventSubscriber(new RemoveCartItemListener());
+            $builder->addEventSubscriber(new ClearCartListener());
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Order::class,
