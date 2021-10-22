@@ -5,43 +5,45 @@ namespace App\Controller;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Form\AddToCartType;
+use App\Manager\CartManager;
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 use function PHPUnit\Framework\throwException;
-use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use App\Manager\CartManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class ProductController extends AbstractController
 {   
-    #[Route('/product/{id}', name: 'product.detail')]
-    public function detail(Product $product, Request $request, CartManager $cartManager): Response
-    {
-        $form = $this->createForm(AddToCartType::class);
-        $form->handleRequest($request);
+    
+    // #[Route('/product/{id}', name: 'product.detail')]
+    // public function detail(Product $product, Request $request, CartManager $cartManager): Response
+    // {
+    //     $form = $this->createForm(AddToCartType::class);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $item = $form->getData();
-            $item->setProduct($product);
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $item = $form->getData();
+    //         $item->setProduct($product);
 
-            $cart = $cartManager->getCurrentCart();
-            $cart
-                ->addItem($item)
-                ->setUpdatedAt(new \DateTime());
+    //         $cart = $cartManager->getCurrentCart();
+    //         $cart
+    //             ->addItem($item)
+    //             ->setUpdatedAt(new \DateTime());
 
-            $cartManager->save($cart);
+    //         $cartManager->save($cart);
 
-            $this->addFlash('Success', "Add To Cart successfully !");
-            return $this->redirectToRoute('product.detail', ['id' => $product->getId()]);
-        }
-        return $this->render('product/home-detail.html.twig', [
-            'product' => $product,
-            'form' => $form->createView()
-        ]);
-    }
+    //         $this->addFlash('Success', "Add To Cart successfully !");
+    //         return $this->redirectToRoute('product.detail', ['id' => $product->getId()]);
+    //     }
+    //     return $this->render('product/detail.html.twig', [
+    //         'product' => $product,
+    //         'form' => $form->createView()
+    //     ]);
+    // }
     
 
     #[Route('/product', name: 'product_index')]
