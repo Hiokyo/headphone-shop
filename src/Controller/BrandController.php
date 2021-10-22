@@ -7,8 +7,12 @@ use App\Form\BrandType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @IsGranted("ROLE_ADMIN")
+ */
 class BrandController extends AbstractController
 {
     #[Route('/brand', name: 'brand_index')]
@@ -39,6 +43,9 @@ class BrandController extends AbstractController
         }
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/brand/delete/{id}', name: 'brand_delete')]
     public function brandDelete($id) {
         $brand = $this->getDoctrine()->getRepository(Brand::class)->find($id);
@@ -54,6 +61,9 @@ class BrandController extends AbstractController
         return $this->redirectToRoute('brand_index');
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/brand/add', name: 'brand_add')]
     public function brandAdd(Request $request){
         $brand = new Brand();
@@ -77,6 +87,9 @@ class BrandController extends AbstractController
         );
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/brand/edit/{id}', name: 'brand_edit')]
     public function brandEdit(Request $request, $id){
         $brand = $this->getDoctrine()->getRepository(Brand::class)->find($id);

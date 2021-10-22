@@ -12,40 +12,16 @@ use function PHPUnit\Framework\throwException;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class ProductController extends AbstractController
 {   
-    
-    // #[Route('/product/{id}', name: 'product.detail')]
-    // public function detail(Product $product, Request $request, CartManager $cartManager): Response
-    // {
-    //     $form = $this->createForm(AddToCartType::class);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $item = $form->getData();
-    //         $item->setProduct($product);
-
-    //         $cart = $cartManager->getCurrentCart();
-    //         $cart
-    //             ->addItem($item)
-    //             ->setUpdatedAt(new \DateTime());
-
-    //         $cartManager->save($cart);
-
-    //         $this->addFlash('Success', "Add To Cart successfully !");
-    //         return $this->redirectToRoute('product.detail', ['id' => $product->getId()]);
-    //     }
-    //     return $this->render('product/detail.html.twig', [
-    //         'product' => $product,
-    //         'form' => $form->createView()
-    //     ]);
-    // }
-    
-
     #[Route('/product', name: 'product_index')]
     public function productIndex() {
         $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
@@ -73,6 +49,9 @@ class ProductController extends AbstractController
         }
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/product/delete/{id}', name: 'product_delete')]
     public function productDelete($id) {
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
@@ -88,6 +67,9 @@ class ProductController extends AbstractController
         return $this->redirectToRoute('product_index');
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/product/add', name: 'product_add')]
     public function productAdd(Request $request){
         $product = new Product();
@@ -127,6 +109,9 @@ class ProductController extends AbstractController
         );
     }
 
+    /**
+     * @IsGranted("ROLE_ADMIN")
+     */
     #[Route('/product/edit/{id}', name: 'product_edit')]
     public function productEdit(Request $request, $id){
         $product = $this->getDoctrine()->getRepository(Product::class)->find($id);

@@ -34,7 +34,7 @@ class ViewProductController extends AbstractController
             $this->addFlash('Success', "Add To Cart successfully !");
             return $this->redirectToRoute('product.detail', ['id' => $product->getId()]);
         }
-        return $this->render('product/detail.html.twig', [
+        return $this->render('view_product/detail.html.twig', [
             'product' => $product,
             'form' => $form->createView()
         ]);
