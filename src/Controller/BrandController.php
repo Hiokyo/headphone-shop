@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Brand;
+use App\Entity\Product;
 use App\Form\BrandType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 
 /**
  * @IsGranted("ROLE_ADMIN")
@@ -49,15 +51,22 @@ class BrandController extends AbstractController
     #[Route('/brand/delete/{id}', name: 'brand_delete')]
     public function brandDelete($id) {
         $brand = $this->getDoctrine()->getRepository(Brand::class)->find($id);
-        if ($brand == null) {
-            $this->addFlash('Error', 'Brand is not existed');
-        } else {
-            $manager = $this->getDoctrine()->getManager();
-            $manager->remove($brand);
+        
+        try {
+            if ($brand == null) {
+                $this->addFlash('Error', 'Brand is not existed');
+            } else {
+                $manager = $this->getDoctrine()->getManager();
 
-            $manager->flush();
-            $this->addFlash('Success', 'Brand has been deleted successfully !');
+                $manager->remove($brand);
+
+                $manager->flush();
+                $this->addFlash('Success', 'Brand has been deleted successfully !');
+            }
+        } catch(ForeignKeyConstraintViolationException $e) {
+            $this->addFlash('Error', 'Still have product in brand');
         }
+
         return $this->redirectToRoute('brand_index');
     }
 

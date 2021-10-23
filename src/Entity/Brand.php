@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\BrandRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\BrandRepository;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass=BrandRepository::class)
@@ -31,8 +32,10 @@ class Brand
 
     /**
      * @ORM\OneToMany(targetEntity=Product::class, mappedBy="brand")
+     * @JoinColumn(onDelete="CASCADE")
      */
     private $products;
+   
 
     public function __construct()
     {
