@@ -10,18 +10,17 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 
     <!--=============== CSS ===============-->
-    <link href="{{ asset('css/styles.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
 
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    
+
   </head>
 {% endblock %}
 
 {% block javascripts %}
   <!-- JavaScript Bundle with Popper -->
   <script src="https://unpkg.com/scrollreveal"></script>
-
-  <script src="{{ asset('js/index.js') }}"> </script>
+  
   <script src="https://kit.fontawesome.com/375a64c11f.js" crossorigin="anonymous"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -209,9 +208,6 @@
                           <h3 class="products__title">{{ product.name }}</h3>
                           <span class="products__price">{{ product.price }} $</span>
 
-                          {# <button class="button button--flex products__button"  >
-                              <i class="ri-shopping-bag-line button__icon"></i>
-                          </button> #}
                           <a href="{{ path('product.detail', {id: product.id}) }}" class="button button--flex products__button">
                                   <i class="ri-shopping-bag-line button__icon"></i>
                           </a>
@@ -292,7 +288,7 @@
         </div>
 
         <p class="footer__copy">
-            <a href="#" target="_blank" class="footer__copy-link">&#169; © 2021 copyright all rights reserved</a>
+            <a href="#" target="_blank" class="footer__copy-link">&#169; 2021 Copyright all rights reserved</a>
         </p>
     </footer>
 
@@ -300,6 +296,92 @@
     <a href="#" class="scrollup" id="scroll-up">
         <i class="ri-arrow-up-s-line scrollup__icon"></i>
     </a>
+    <script>
+        const navMenu = document.getElementById('nav-menu'),
+        navToggle = document.getElementById('nav-toggle'),
+        navClose = document.getElementById('nav-close')
+
+        /*===== MENU SHOW =====*/
+        /* Validate if constant exists */
+        if(navToggle){
+            navToggle.addEventListener('click', () =>{
+                navMenu.classList.add('show-menu')
+            })
+        }
+
+        /*===== MENU HIDDEN =====*/
+        /* Validate if constant exists */
+        if(navClose){
+            navClose.addEventListener('click', () =>{
+                navMenu.classList.remove('show-menu')
+            })
+        }
+
+        /*=============== REMOVE MENU MOBILE ===============*/
+        const navLink = document.querySelectorAll('.nav__link')
+
+        function linkAction(){
+            const navMenu = document.getElementById('nav-menu')
+            // When we click on each nav__link, we remove the show-menu class
+            navMenu.classList.remove('show-menu')
+        }
+        navLink.forEach(n => n.addEventListener('click', linkAction))
+
+        /*=============== CHANGE BACKGROUND HEADER ===============*/
+        function scrollHeader(){
+            const header = document.getElementById('header')
+            // When the scroll is greater than 50 viewport height, add the scroll-header class to the header tag
+            if(this.scrollY >= 50) header.classList.add('scroll-header'); else header.classList.remove('scroll-header')
+        }
+        window.addEventListener('scroll', scrollHeader)
+
+        /*=============== SHOW SCROLL UP ===============*/ 
+        function scrollUp(){
+            const scrollUp = document.getElementById('scroll-up');
+            // When the scroll is higher than 200 viewport height, add the show-scroll class to the a tag with the scroll-top class
+            if(this.scrollY >= 200) scrollUp.classList.add('show-scroll'); else scrollUp.classList.remove('show-scroll')
+        }
+        window.addEventListener('scroll', scrollUp)
+
+        /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
+        const sections = document.querySelectorAll('section[id]')
+
+        function scrollActive(){
+            const scrollY = window.pageYOffset
+
+            sections.forEach(current =>{
+                const sectionHeight = current.offsetHeight
+                const sectionTop = current.offsetTop - 50;
+                sectionId = current.getAttribute('id')
+
+                if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
+                    document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.add('active-link')
+                }else{
+                    document.querySelector('.nav__menu a[href*=' + sectionId + ']').classList.remove('active-link')
+                }
+            })
+        }
+        window.addEventListener('scroll', scrollActive)
+
+        /*=============== SCROLL REVEAL ANIMATION ===============*/
+        const sr = ScrollReveal({
+            distance: '60px',
+            duration: 2500,
+            delay: 400,
+            // reset: true
+        })
+
+        sr.reveal(`.home__header, .section__title`,{delay: 600})
+        sr.reveal(`.home__footer`,{delay: 700})
+        sr.reveal(`.home__img`,{delay: 900, origin: 'top'})
+
+        sr.reveal(`.sponsor__img, .products__card, .footer__logo, .footer__content, .footer__copy`,{origin: 'top', interval: 100})
+        sr.reveal(`.specs__data, .discount__animate`,{origin: 'left', interval: 100})
+        sr.reveal(`.specs__img, .discount__img`,{origin: 'right'})
+        sr.reveal(`.case__img`,{origin: 'top'})
+        sr.reveal(`.case__data`)
+    </script>
+
     </body>
 {% endblock %}
 
