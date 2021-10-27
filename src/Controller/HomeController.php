@@ -12,7 +12,7 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(ProductRepository $productRepository): Response
     {
-        return $this->render('home/index.html.twig', [
+        return $this->render('home/index2.html.twig', [
             'products' => $productRepository->findAll(),
         ]);
     }

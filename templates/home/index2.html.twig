@@ -1,0 +1,306 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dino Shop{% endblock %}
+{% block stylesheets %}
+  <head>
+    <!--=============== FAVICON ===============-->
+    <link href="shortcut icon" href="{{ asset('image/favicon.png') }}" type="image/x-icon">
+
+    <!--=============== REMIX ICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!--=============== CSS ===============-->
+    <link href="{{ asset('css/styles.css') }}" rel="stylesheet"/>
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    
+  </head>
+{% endblock %}
+
+{% block javascripts %}
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://unpkg.com/scrollreveal"></script>
+
+  <script src="{{ asset('js/index.js') }}"> </script>
+  <script src="https://kit.fontawesome.com/375a64c11f.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+{% endblock %}
+ 
+{% block header %}
+<body>
+<!--=============== HEADER ===============-->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">
+                <img src="{{ asset('/image/product/logo.png') }}" alt="Logo">
+            </a>
+
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item">
+                        <a href="#home" class="nav__link active-link">Home</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#specs" class="nav__link">Specs</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#case" class="nav__link">Case</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#products" class="nav__link">Products</a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="{{ path('cart') }}" class="nav__link">Your Cart</a>
+                    </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                      <li class="nav__item">
+                          <a href="{{ path('product_index') }}" class="nav__link">Management</a>
+                      </li>
+                    {% else %}
+
+                    {% endif %}
+
+                    <li class="nav__item login">
+                        <a href="{{ path('app_login') }}" class="nav__link">
+                            <i class="fas fa-sign-in-alt fa-lg"></i>
+                        </a>
+                     </li>
+                </ul>
+
+                <div class="nav__close" id="nav-close">
+                    <i class="ri-close-line"></i>
+                </div>
+            </div>
+
+            <div class="nav__toggle" id="nav-toggle">
+                <i class="ri-function-line"></i>
+            </div>
+        </nav>
+    </header>
+{% endblock %}
+
+{% block body %}
+</body>
+    <main class="main">
+        <!--=============== HOME ===============-->
+        <section class="home section" id="home">
+            <div class="home__container container grid">
+                <div>
+                    <img src="{{ asset('/image/product/')~products[0].image }}" alt="" class="home__img">
+                </div>
+                
+                <div class="home__data">
+                    <div class="home__header">
+                        <h1 class="home__title">On ear</h1>
+                        <h2 class="home__subtitle">{{products[0].name}}</h2>
+                    </div>
+
+                    <div class="home__footer">
+                        <h3 class="home__title-description">Overview</h3>
+                        <p class="home__description">
+                          {{products[0].description}}
+                        </p>
+                        <a href="{{ path('product.detail', {id: products[0].id}) }}" class="button button--flex">
+                            <span class="button--flex">
+                                <i class="ri-shopping-bag-line button__icon"></i></i> Add to Cart
+                            </span>
+                            <span class="home__price">{{products[0].price}} $</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!--=============== SPONSOR ===============-->
+        <section class="sponsor section">
+            <div class="sponsor__container container grid">
+                <img src="{{ asset('/image/product/sponsor1.png') }}" alt="" class="sponsor__img">
+                <img src="{{ asset('/image/product/sponsor2.png') }}" alt="" class="sponsor__img">
+                <img src="{{ asset('/image/product/sponsor3.png') }}" alt="" class="sponsor__img">
+                <img src="{{ asset('/image/product/sponsor4.png') }}" alt="" class="sponsor__img">
+            </div>
+        </section>
+
+        <!--=============== SPECS ===============-->
+        <section class="specs section grid" id="specs">
+            <h2 class="section__title section__title-gradient">{{products[1].name}}</h2>
+
+            <div class="specs__container container grid">
+                <div class="specs__content grid">
+                    <div class="specs__data">
+                        <i class="ri-bluetooth-line specs__icon"></i>
+                        <h3 class="specs__title">Connection</h3>
+                        <span class="specs__subtitle">Bluetooth v5.2</span>
+                    </div>
+
+                    <div class="specs__data">
+                        <i class="ri-battery-charge-line specs__icon"></i>
+                        <h3 class="specs__title">Battery</h3>
+                        <span class="specs__subtitle">Duration 40h</span>
+                    </div>
+
+                    <div class="specs__data">
+                        <i class="ri-plug-line specs__icon"></i>
+                        <h3 class="specs__title">Load</h3>
+                        <span class="specs__subtitle">Fast charge 4.2-AAC</span>
+                    </div>
+
+                    <div class="specs__data">
+                        <i class="ri-mic-line specs__icon"></i>
+                        <h3 class="specs__title">Microphone</h3>
+                        <span class="specs__subtitle">Supports Apple Siri <br> and Google</span>
+                    </div>
+                </div>
+                
+                <div>
+                    <img src="{{ asset('/image/product/')~products[1].image }}" alt="" class="specs__img">
+                </div>
+            </div>
+        </section>
+
+        <!--=============== CASE ===============-->
+        <section class="case section grid" id="case">
+            <h2 class="section__title section__title-gradient">{{products[2].name}}</h2>
+
+            <div class="case__container container grid">
+                <div>
+                    <img src="{{ asset('/image/product/')~products[2].image }}" alt="" class="case__img">
+                </div>
+
+                <div class="case__data">
+                    <p class="case__description">
+                      {{products[2].description}}
+                    </p>
+                    <a href="{{ path('product.detail', {id: products[2].id}) }}" class="button button--flex">
+                        <i class="ri-information-line button__icon"></i> More info
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!--=============== DISCOUNT ===============-->
+        <section class="discount section">
+            <div class="discount__container container grid">
+                <div class="discount__animate">
+                    <h2 class="discount__title">Immerse yourself in <br> your music</h2>
+                    <p class="discount__description">Get it now, up to 50% off.</p>
+                    <a href="#" class="button button--flex">
+                        <i class="ri-shopping-bag-line button__icon"></i> Shop Now
+                    </a>
+                </div>
+
+                <img src="{{ asset('/image/product/discount.png') }}" alt="" class="discount__img">
+            </div>
+        </section>
+
+        <!--=============== PRODUCTS ===============-->
+        <section class="products section" id="products">
+            <h2 class="section__title section__title-gradient products__line">
+                Choose <br> Your Style
+            </h2>
+
+            <div class="products__container container grid">
+              {% for product in products[3:9] %}
+                  <article class="products__card">
+                      <div class="products__content">
+                          <img src="{{ asset('/image/product/')~product.image }}" alt="" class="products__img">
+
+                          <h3 class="products__title">{{ product.name }}</h3>
+                          <span class="products__price">{{ product.price }} $</span>
+
+                          {# <button class="button button--flex products__button"  >
+                              <i class="ri-shopping-bag-line button__icon"></i>
+                          </button> #}
+                          <a href="{{ path('product.detail', {id: product.id}) }}" class="button button--flex products__button">
+                                  <i class="ri-shopping-bag-line button__icon"></i>
+                          </a>
+                      </div>
+                  </article>
+              {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}
+
+{% block footer %}
+    <!--=============== FOOTER ===============-->
+    <footer class="footer section">
+        <div class="footer__container container grid">
+            <a href="#" class="footer__logo">
+                <img src="{{ asset('/image/product/logo.png') }}" alt="">
+            </a>
+
+            <div class="footer__content">
+                <h3 class="footer__title">Products</h3>
+
+                <ul class="footer__links">
+                    <li>
+                        <a href="#" class="footer__link">Headphones</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer__link">Earphones</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer__link">Earbuds</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer__link">Accesories</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer__content">
+                <h3 class="footer__title">Support</h3>
+
+                <ul class="footer__links">
+                    <li>
+                        <a href="#" class="footer__link">Product help</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('app_register') }}" class="footer__link">Register</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer__link">Updates</a>
+                    </li>
+                    <li>
+                        <a href="#" class="footer__link">Provides</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="footer__content">
+                <form action="" class="footer__form">
+                    <input type="email" placeholder="Email" class="footer__input">
+                    <button class="button button--flex">
+                        <i class="ri-send-plane-line button__icon"></i> Subscribe
+                    </button>
+                </form>
+
+                <div class="footer__social">
+                    <a href="https://www.facebook.com/" target="_blank" class="footer__social-link">
+                        <i class="ri-facebook-fill"></i>
+                    </a>
+                    <a href="https://www.instagram.com/" target="_blank" class="footer__social-link">
+                        <i class="ri-instagram-line"></i>
+                    </a>
+                    <a href="https://twitter.com/" target="_blank" class="footer__social-link">
+                        <i class="ri-twitter-line"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <p class="footer__copy">
+            <a href="#" target="_blank" class="footer__copy-link">&#169; © 2021 copyright all rights reserved</a>
+        </p>
+    </footer>
+
+    <!--=============== SCROLL UP ===============-->
+    <a href="#" class="scrollup" id="scroll-up">
+        <i class="ri-arrow-up-s-line scrollup__icon"></i>
+    </a>
+    </body>
+{% endblock %}
+
+
