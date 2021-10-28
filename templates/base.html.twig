@@ -17,11 +17,11 @@
 
         {% block javascripts %}
             <!-- JavaScript Bundle with Popper -->
-
+            <script src="https://kit.fontawesome.com/375a64c11f.js" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         {% endblock %}
 
-        <style>
+        {# /* <style>
             .nav-item{
                 padding: 0 20px; 
             }
@@ -34,7 +34,7 @@
                 font-size: 1rem;
             }
 
-        </style>
+        </style> */ #}
     </head>
     <body>
         <div id="wrapper">
@@ -60,22 +60,24 @@
 
                 <div class="navbar-nav cart ml-auto">
                     <a href="{{ path('app_login') }}" class="btn btn-outline-light btn-floating m-1 menu">
-                        <i class="uil uil-signin"></i>
+                        <i class="fas fa-sign-in-alt"></i>
                     </a>
                 </div>
                 
                 <div class="navbar-nav cart">
                     <a href="{{ path('cart') }}" class="btn btn-outline-light btn-floating m-1 menu">
-                        <i class="uil uil-shopping-cart-alt "></i>
+                        <i class="fas fa-shopping-cart"></i>
                     </a>
                 </div>
-
+                {% if is_granted('ROLE_USER') %}
                 <div class="navbar-nav cart">
                     <a href="{{ path('app_logout') }}" class="btn btn-outline-light btn-floating m-1 menu">
-                        <i class="uil uil-signout"></i>
+                        <i class="fas fa-sign-out-alt"></i>
                     </a>
                 </div>
+                {% else %}
 
+                {% endif %}
             </nav>
             
         {% endblock %}
